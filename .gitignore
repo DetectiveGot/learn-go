@@ -1,0 +1,20 @@
+# Air temporary build files
+/tmp/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Go test binaries and coverage
+*.test
+*.out
+coverage.out
+
+# Local editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
