@@ -5,14 +5,24 @@ import (
 
 	"github.com/detectivegot/fiber-learn/routes"
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/template/html/v3"
 )
 
 func main() {
-	app := fiber.New()
+
+	engine := html.New("./views", ".html")
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
 	
 	app.Get("/", func(c fiber.Ctx) error {
-		return c.SendString("Welcome to Fiber")
+		render := c.Render("index", fiber.Map{
+			"Title": "Eman",
+			"Text": "this is learning go-fiber!",
+		})
+		return render
 	})
+
 	routes.HandleRoutes(app)
 	app.Listen(":8089")
 	fmt.Println("Server is running at port 8089")
