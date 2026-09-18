@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/detectivegot/fiber-learn/data"
 	"github.com/detectivegot/fiber-learn/models"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v3"
 )
 
@@ -30,7 +32,20 @@ func CreateUser(c fiber.Ctx) error {
 	var user models.Users
 
 	if err := c.Bind().Body(&user); err != nil {
-		return c.Status(fiber.StatusBadRequest).SendString("Invaild request.")
+		var validateErrs validator.ValidationErrors
+		if errors.As(err, &validateErrs) {
+			out := make([]fiber.Map, 0, len(validateErrs))
+			for _, e := range validateErrs {
+				out = append(out, fiber.Map{
+					"field": e.Field(),
+					"rule": e.Tag(),
+					"param": e.Param(),
+					"value": e.Value(),
+				})
+			}
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"errors": out})
+		}
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid user")
 	}
 
 	data.Users = append(data.Users, user)
@@ -45,7 +60,20 @@ func UpdateUser(c fiber.Ctx) error {
 	}
 	var user models.Users
 	if err := c.Bind().Body(&user); err != nil {
-		return c.Status(fiber.StatusBadRequest).SendString("Invaild request.")
+		var validateErrs validator.ValidationErrors
+		if errors.As(err, &validateErrs) {
+			out := make([]fiber.Map, 0, len(validateErrs))
+			for _, e := range validateErrs {
+				out = append(out, fiber.Map{
+					"field": e.Field(),
+					"rule": e.Tag(),
+					"param": e.Param(),
+					"value": e.Value(),
+				})
+			}
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"errors": out})
+		}
+		return c.Status(fiber.StatusBadRequest).SendString("Invalid user")
 	}
 	for i := range data.Users {
 		if id == data.Users[i].Id {
