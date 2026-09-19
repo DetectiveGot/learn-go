@@ -1,7 +1,9 @@
 package models
 
+import "uuid"
+
 type Users struct {
-	Id   int    `json:"id" validate:"required"`
+	Id   uuid.UUID   `json:"id" validate:"required"`
 	Name string `json:"name" validate:"required"`
-	Age  int    `json:"age" validate:"required,gte=0,lte=100"`
+	Age  int16    `json:"age" validate:"required,gte=0,lte=100"`
 }

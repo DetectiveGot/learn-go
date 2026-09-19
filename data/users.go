@@ -1,22 +1,24 @@
 package data
 
 import (
+	"uuid"
+
 	"github.com/detectivegot/fiber-learn/models"
 )
 
 var Users = []models.Users{
 	{
-		Id: 1,
+		Id: uuid.New(),
 		Name: "Got",
 		Age: 10,
 	},
 	{
-		Id: 2,
+		Id: uuid.New(),
 		Name: "Laplace",
 		Age: 11,
 	},
 	{
-		Id: 3,
+		Id: uuid.New(),
 		Name: "Orivia",
 		Age: 13,
 	},
