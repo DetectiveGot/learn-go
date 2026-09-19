@@ -10,9 +10,9 @@ import (
 func UserRoutes(v1 fiber.Router, db *sql.DB) {
 	v1.Route("/users", func (r fiber.Router) {
 		r.Get("/", controllers.GetUsers(db))
-		// r.Get("/:id<int>", controllers.GetUser)
-		// r.Post("/", controllers.CreateUser)
-		// r.Put("/:id", controllers.UpdateUser)
-		// r.Delete("/:id", controllers.DeleteUser)
+		r.Get("/:id", controllers.GetUser(db))
+		r.Post("/", controllers.CreateUser(db))
+		r.Put("/:id", controllers.UpdateUser(db))
+		r.Delete("/:id", controllers.DeleteUser(db))
 	})
 }
